@@ -3,8 +3,11 @@
 
 LiquidCrystal_I2C lcd(0x27,16,2);   //инициализация дисплея
 
+uint32_t timer1,timer2,timer3;      //таймеры для выполения функций
+
 int realy1 = 3;              //пин реле 3
 int realy2 = 4;              //пин реле 4
+
 
 void setup()
 {
