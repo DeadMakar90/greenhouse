@@ -80,4 +80,5 @@ void lcd_out(){                         //функция вывода на эк�
   lcd.setCursor(0, 1);
   lcd.print(temp1);
   lcd.setCursor(5, 1);
+  lcd.print(temp2);
 }
