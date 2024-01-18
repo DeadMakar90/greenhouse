@@ -59,8 +59,8 @@ void relay_time(){                      //функция управления л
 void relay_temp(){                      //функция управления полдогревом
   float temp1 = dht1.readTemperature(DHTPIN1);      //данные с датчика 1
   float temp2 = dht2.readTemperature(DHTPIN2);      //данные с датчика 2
-  float up_lemit  = 26.0;                           //верхний порог температуры
-  float down_lemit = 22.0;                          //нижний порог температуры
+  float up_lemit  = 24.0;                           //верхний порог температуры
+  float down_lemit = 20.0;                          //нижний порог температуры
  // Serial.println(temp1);                          //выхлоп в монитор порта для отладки
  // Serial.println(temp2);                          //выхлоп в монитор порта для отладки
  if (temp1 || temp2 >= up_lemit)
