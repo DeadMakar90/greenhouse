@@ -23,9 +23,24 @@ void setup()
 }
 void loop()
 {
+    if (millis() - timer1 >= 10000)
+    {
+       timer1 = millis();
+       relay_time();
+    }
+    
+    if (millis() - timer2 >= 5000)
+    {
+        timer2 = millis();
+        relay_temp();
+    }
 
+    if (millis() - timer3 > 1000)
+    {
+        timer3 = millis();
+        lcd_out();
+    }
 }
-
 void relay_time(){                      //функция управления лампами
   watch.gettime();
   String time1 = watch.gettime("H:i:s");
@@ -41,7 +56,6 @@ void relay_time(){                      //функция управления л
     
   }
 }
-
 void relay_temp(){                      //функция управления полдогревом
   float temp1 = dht1.readTemperature(DHTPIN1);      //данные с датчика 1
   float temp2 = dht2.readTemperature(DHTPIN2);      //данные с датчика 2
@@ -58,12 +72,11 @@ void relay_temp(){                      //функция управления п
     digitalWrite(realy2,LOW);
  }
 }
-
 void lcd_out(){                         //функция вывода на экран
   float temp1 = dht1.readTemperature(DHTPIN1);      
   float temp2 = dht2.readTemperature(DHTPIN2);
   lcd.setCursor(0,0);                     // Устанавливаем курсор на первую строку и нулевой символ.
-  lcd.print(watch.gettime("H:i"));
+  lcd.print(watch.gettime("H:i:s"));
   lcd.setCursor(0, 1);
   lcd.print(temp1);
   lcd.setCursor(5, 1);
