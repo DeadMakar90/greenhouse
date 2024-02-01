@@ -3,17 +3,21 @@
 #include <DHT_U.h>              //библиотека для датчика DHT
 #include <Wire.h>               //библиотека для i2c
 #include <LiquidCrystal_I2C.h>  //библиотека для дисплея 
-#define DHTPIN1 2                   // пин датчика DTH11 d5
-#define DHTPIN2 3                   // пин датчика DTH11 d2
+#define DHTPIN1 2                   // пин датчика DTH11 
+#define DHTPIN2 3                   // пин датчика DTH11 
 LiquidCrystal_I2C lcd(0x27,16,2);   //установка экрана
 iarduino_RTC watch(RTC_DS3231);     //установка часов 
 uint32_t timer1,timer2,timer3;      //таймеры для выполения функций
-int relay1 = 4;              //пин реле d3
-int relay2 = 5;              //пин реле d4
+DHT dht1(DHTPIN1, DHT11); 
+DHT dht2(DHTPIN2, DHT11);
+int relay1 = 4;              //пин реле 
+int relay2 = 5;              //пин реле 
 
 void setup()
 {
 //    Serial.begin(9600);             //инциализация монитора com-порта для отладки
+    dht1.begin();
+    dht2.begin();
     pinMode(relay1,OUTPUT);
     pinMode(relay2,OUTPUT);
     watch.begin();                      //инциализация часов
@@ -25,7 +29,7 @@ void setup()
 }
 void loop()
 {
-    if (millis() - timer1 >= 10000)
+    if (millis() - timer1 >= 600000)
     {
        timer1 = millis();
        relay_time();
@@ -45,9 +49,9 @@ void loop()
 }
 void relay_time(){                      //функция управления лампами
   watch.gettime();
-  String time1 = watch.gettime("H:i:s");
-  String start = "22:04:00"; //включение ламп
-  String stop =  "22:08:00"; //выключение ламп
+  String time1 = watch.gettime("H:i");
+  String start = "22:04"; //включение ламп
+  String stop =  "22:08"; //выключение ламп
   Serial.println(time1);
   if (time1 == start){
     digitalWrite(relay1, LOW);
@@ -55,7 +59,6 @@ void relay_time(){                      //функция управления л
   }
   if (time1 == stop){
     digitalWrite(relay1, HIGH);
-    
   }
 }
 void relay_temp(){                      //функция управления полдогревом
@@ -67,7 +70,7 @@ void relay_temp(){                      //функция управления п
  // Serial.println(temp2);                          //выхлоп в монитор порта для отладки
  if (temp1 || temp2 >= up_lemit)
  {
-    dititalWrite(relay2,HIGH);
+    digitalWrite(relay2,HIGH);
  }
  if (temp1 || temp2 <= down_lemit)
  {
