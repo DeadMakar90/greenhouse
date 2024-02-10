@@ -57,13 +57,13 @@ void relay_time(){                    //функция управления ла
   if (time1 == start){
     digitalWrite(relay1, HIGH);
     lcd.setCursor(0,5); 
-    lcd_out("LED ON");
+    lcd.print("LED ON");
   }
 
   if (time1 == stop){
     digitalWrite(relay1, LOW);
     lcd.setCursor(0,5); 
-    lcd_out("LED OFF");
+    lcd.print("LED OFF");
   }
 }
 //void relay_temp(){                      //функция управления полдогревом
